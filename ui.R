@@ -1,12 +1,21 @@
-# Define UI
+# Create UI
+
 shinyUI(pageWithSidebar(
   
   # Application title
+  
   headerPanel("Exploring French and US Wine Data"),
   
+  # Create Sidebar
+  
   sidebarPanel(
-###FIRST PANEL
+    
+    
+  # First Panel, US Wine 
+    ## Create slider for years and checkbox for lines of best fit
+    
     conditionalPanel(
+      
       'input.dataset === "US Wine"',
       
       sliderInput("Inyear", "Select Years", min=1942, max=2014, value = c(1944, 2014),sep = "", step=1),
@@ -27,6 +36,7 @@ shinyUI(pageWithSidebar(
       
       br(),
       
+      # Create fields at bottom of page
       
       helpText("Explore season by season trends across all tiers on this page"),
       
@@ -43,9 +53,12 @@ shinyUI(pageWithSidebar(
                  ", for more information, to suggest improvements or report errors.")),
 
       br()
-    ),
+      
+    ), # end first panel
     
-###SECOND PANEL
+    
+  # Second Panel, US and California Wine
+    ## Create slider for years, checkbox for best fit
 
     conditionalPanel(
       'input.dataset === "US and California"',
@@ -67,6 +80,7 @@ shinyUI(pageWithSidebar(
       
       br(),
       
+      # Create fields at bottom of page
       
       helpText("Explore season by season trends across all tiers on this page"),
       
@@ -83,49 +97,53 @@ shinyUI(pageWithSidebar(
                  ", for more information, to suggest improvements or report errors.")),
       
       br()
-    ),
+      
+    ), # end second panel
 
-###THIRD PANEL
+  
+  # Third Panel, US and France Wine
+    ## Slider input for years and trend lines check box
 
-conditionalPanel(
-  'input.dataset === "US and France"',
+    conditionalPanel(
+      'input.dataset === "US and France"',
   
-  sliderInput("Inyear3", "Select Years", min=1995, max=2012, value = c(1995, 2012), step=1, sep=""),
+      sliderInput("Inyear3", "Select Years", min=1995, max=2012, value = c(1995, 2012), step=1, sep=""),
   
-  br(),
+      br(),
   
   
-  selectInput("type3", "Select France or USA to Display:",
+      selectInput("type3", "Select France or USA to Display:",
               choices = c("USA",
                           "France","Both")
               ,selected="USA"
-  ),
+      ),
   
-  br(),
+      br(),
   
-  selectInput("Outcomey2", label = "Y Axis:", choices = 
+      selectInput("Outcomey2", label = "Y Axis:", choices = 
               list("Exports" = "Exports",
                    "Imports" = "Imports",
                    "Production" = "Production",
                    "Consumption" = "Consumption"
                    ),selected="Exports"
-  ),
+      ),
   
-  br(),
+      br(),
+  
+      # Create fields at bottom of page
+  
+      checkboxInput("show.trend3", "Show trendlines", FALSE),
+  
+      br(),
   
   
-  checkboxInput("show.trend3", "Show trendlines", FALSE),
+      helpText("Explore season by season trends across all tiers on this page"),
   
-  br(),
+      br(),
   
+      helpText(h5("Authors: Byron King & Evan Romanko")),
   
-  helpText("Explore season by season trends across all tiers on this page"),
-  
-  br(),
-  
-  helpText(h5("Authors: Byron King & Evan Romanko")),
-  
-  helpText(p("Please contact",
+      helpText(p("Please contact",
              a(href ="https://github.com/ByronKKing", "Byron on GitHub",target = "_blank"),
              " or Evan on ",
              a(href ="https://www.linkedin.com/in/eromanko", "LinkedIn", target = "_blank"),
@@ -133,22 +151,22 @@ conditionalPanel(
              a(href ="https://www.facebook.com/GWDataScience/?fref=ts", "GW DATA",target = "_blank"),
              " for more information, to suggest improvements or report errors.")),
   
+      br()
   
-  
-  br()
-  
-  )
+    ) # end third panel
 
-),
+  ), # end sidebar panel
     
     
-    # Show the main display
-    mainPanel(
-      tabsetPanel(id='dataset',
-        tabPanel('US Wine', plotOutput("plot1")),
-        tabPanel('US and California', plotOutput("plot2")),
-        tabPanel('US and France', plotOutput("plot3"))
-      )
+  # Show the main display
+  
+  mainPanel(
+    tabsetPanel(id='dataset',
+      tabPanel('US Wine', plotOutput("plot1")),
+      tabPanel('US and California', plotOutput("plot2")),
+      tabPanel('US and France', plotOutput("plot3"))
     )
-  ))
+  ) # end mainPanel
+  
+)) # end pageWithSidebar and UI
 
